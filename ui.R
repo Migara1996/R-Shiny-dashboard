@@ -1,5 +1,10 @@
 library(shiny)
 library(shinydashboard)
+library(plotly)
+
+
+a=read.csv("an_mech_ad.csv")
+a$Var1=as.Date(a$Var1, '%m/%d/%Y')
 
 
 shinyUI(
@@ -61,23 +66,38 @@ shinyUI(
                   dateRangeInput(
                    inputId="daterange",
                    label="Select the date range",
-                   start=min(a$Var1),
-                   end=max(a$Var1),
-                   min=min(a$Var1),
-                   max=max(a$Var1),
+                   start=a$Var1[a$Var1=="2020-05-1"],
+                   end=a$Var1[a$Var1=="2020-05-31"],
+                   min=a$Var1[a$Var1=="2020-05-1"],
+                   max=a$Var1[a$Var1=="2020-05-31"],
+                   # start=min(a$Var1),
+                   # end=max(a$Var1),
+                   # min=min(a$Var1),
+                   # max=max(a$Var1),
                    format="yyyy/mm/dd",
                    separator="-"
                   
                 ),align="center"),
                 fluidRow(
-                  infoBox(title="Total admissions",value=4,color="aqua",width = 3,fill=T,icon = icon("user-alt")),
-                  infoBox(title="Bed occupancy",value="1%",color="aqua",width = 3,fill=T,icon = icon("chart-line")),
-                  infoBox(title="Average LoS",color="aqua",width = 3,fill=T,icon = icon("calendar-alt")),
-                  infoBox(title="Admission type",color="aqua",width =3,fill=T,icon = icon("procedures")),
-                  infoBox(title="ICU turn over",color="aqua",width =3,fill=T,icon = icon("chart-line"))
+                  infoBoxOutput("info1",width = 3),
+                  infoBoxOutput("info2",width = 3),
+                  infoBoxOutput("info3",width = 3),
+                  infoBoxOutput("info4",width = 3)
+                  #infoBox(title="Total admissions",value=4,color="aqua",width=3,fill=T,icon = icon("user-alt")),
+                  #infoBox(title="Bed occupancy",value="1%",color="aqua",width=3,fill=T,icon = icon("chart-line")),
+                  #infoBox(title="Average LoS",color="aqua",width=3,fill=T,icon = icon("calendar-alt")),
+                  #infoBox(title="Admission type",color="aqua",width=3,fill=T,icon = icon("procedures")),
+                  #infoBox(title="ICU turn over",color="aqua",width=3,fill=T,icon = icon("chart-line"))
                 ),
                 fluidRow(
-                  box(plotOutput("histogram"))
+                  box(plotlyOutput("histogram"),width = 5,height = 350),
+                  box(textOutput("apache"),width = 2,title = "Severity of illness score"),
+                  box(plotlyOutput("ventilator"),width = 5,height = 350)
+                ),
+                fluidRow(
+                  box(plotOutput("anti"),width = 4),
+                  box(textOutput("reason"),width = 4,title = "Reason for admission",height = 300),
+                  box(plotOutput("card"),width = 4)
                 )),
         tabItem(tabName = "registry",
                 h1("My Registry")
