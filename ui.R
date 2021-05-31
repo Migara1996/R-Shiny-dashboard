@@ -3,8 +3,8 @@ library(shinydashboard)
 library(plotly)
 
 
-a=read.csv("an_mech_ad.csv")
-a$Var1=as.Date(a$Var1, '%m/%d/%Y')
+# a=read.csv("an_mech_ad.csv")
+# a$Var1=as.Date(a$Var1, '%m/%d/%Y')
 
 
 shinyUI(
@@ -66,10 +66,14 @@ shinyUI(
                   dateRangeInput(
                    inputId="daterange",
                    label="Select the date range",
-                   start=a$Var1[a$Var1=="2020-05-1"],
-                   end=a$Var1[a$Var1=="2020-05-31"],
-                   min=a$Var1[a$Var1=="2020-05-1"],
-                   max=a$Var1[a$Var1=="2020-05-31"],
+                   start="2020-05-01",
+                   end="2020-05-31",
+                   min="2018-01-01",
+                   max="2021-01-21",
+                   # start=a$Var1[a$Var1=="2020-05-1"],
+                   # end=a$Var1[a$Var1=="2020-05-31"],
+                   # min=a$Var1[a$Var1=="2020-05-1"],
+                   # max=a$Var1[a$Var1=="2020-05-31"],
                    # start=min(a$Var1),
                    # end=max(a$Var1),
                    # min=min(a$Var1),
@@ -90,14 +94,14 @@ shinyUI(
                   #infoBox(title="ICU turn over",color="aqua",width=3,fill=T,icon = icon("chart-line"))
                 ),
                 fluidRow(
-                  box(plotlyOutput("histogram"),width = 5,height = 350),
-                  box(textOutput("apache"),width = 2,title = "Severity of illness score"),
-                  box(plotlyOutput("ventilator"),width = 5,height = 350)
+                  box(plotlyOutput("histogram"),width = 4,height = 250),
+                  box(htmlOutput("apache"),width = 4,title = "Severity of illness score",height=250),
+                  box(plotlyOutput("ventilator"),width = 4,height = 250)
                 ),
                 fluidRow(
-                  box(plotOutput("anti"),width = 4),
-                  box(textOutput("reason"),width = 4,title = "Reason for admission",height = 300),
-                  box(plotOutput("card"),width = 4)
+                  box(plotlyOutput("anti"),width = 4,height = 320),
+                  box(textOutput("reason"),width = 4,title = "Reason for admission",height = 320),
+                  box(plotlyOutput("card"),width = 4,height = 320)
                 )),
         tabItem(tabName = "registry",
                 h1("My Registry")
