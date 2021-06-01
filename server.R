@@ -62,11 +62,20 @@ shinyServer(function(input,output){
     t<-list(
       size=10
     )
+    xaxis<-list(
+      autotick=FALSE,
+      ticks = "outside",
+      tickcolor = toRGB("black"),
+      showticklabels = TRUE,
+      tickangle = 45,
+      type = 'date',
+      tickformat = "%d/%m"
+    )
     fig <- plot_ly(icudate1(), x =icudate1()$Var1, y = icudate1()$planned, 
                    type = 'bar', name = 'Emergency',width = 400,height = 225,marker=list(color="lightskyblue"))
     fig <- fig %>% add_trace(y =icudate1()$unplanned, name = 'Non Emergency',marker=list(color="darkblue"))
     fig <- fig %>% layout(yaxis =yaxis,title="ICU admissions",font=t,
-                          barmode = 'stack')
+                          barmode = 'stack',xaxis=xaxis)
     
     fig
     

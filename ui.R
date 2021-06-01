@@ -67,7 +67,7 @@ shinyUI(
                    inputId="daterange",
                    label="Select the date range",
                    start="2020-05-01",
-                   end="2020-05-31",
+                   end="2020-05-10",
                    min="2018-01-01",
                    max="2021-01-21",
                    # start=a$Var1[a$Var1=="2020-05-1"],
